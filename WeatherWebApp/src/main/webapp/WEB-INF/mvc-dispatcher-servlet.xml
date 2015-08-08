@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<context:component-scan base-package="simon.demo.controller" />
+	<mvc:annotation-driven />
+	<!-- <mvc:default-servlet-handler /> -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+	<bean id="cityListService"
+		class="simon.demo.service.CityListService">
+		<property name="cityList">
+			<list>
+				<value>Syndey</value>
+				<value>Melbourne</value>
+				<value>Woloogong</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="onlineWeatherService"
+		class="simon.demo.service.OnlineWeatherService">
+		<property name="urlTemplate">
+			<value>http://api.openweathermap.org/data/2.5/weather?q=CITY_NAME&amp;mode=xml</value>
+		</property>
+		<property name="cityNamePlaceHolder">
+			<value>CITY_NAME</value>
+		</property>
+	</bean>
+
+</beans>
